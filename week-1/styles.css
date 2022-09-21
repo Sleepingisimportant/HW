@@ -11,6 +11,10 @@ h1 {
     font-size: 2em;
 }
 
+i {
+    color: grey;
+}
+
 
 .banner {
     width: 100%;
@@ -21,7 +25,8 @@ h1 {
     /* center vertically and horizontally: */
     vertical-align: middle;
     text-align: center;
-    line-height: 300px; /*  same as  div height */
+    line-height: 300px;
+    /*  same as  div height */
 }
 
 
@@ -35,6 +40,8 @@ h1 {
     position: fixed;
     top: 0;
 }
+
+
 
 
 .menu-title {
@@ -52,6 +59,15 @@ h1 {
     padding-right: 20px;
 }
 
+.menu-content-container i {
+    display: none;
+    font-size: 36px;
+    width: 100%;
+    align-items: center;
+    cursor: pointer;
+
+}
+
 .menu-content-container ul {
     height: 100%;
     margin-block-start: 0;
@@ -67,6 +83,12 @@ h1 {
 .menu-content-container li {
     padding: 0 1em;
 }
+
+.menu-icon-container {
+    display: none;
+}
+
+
 
 
 .main-content {
@@ -88,7 +110,7 @@ h1 {
     background-color: lightblue;
     display: flex;
     flex: 1 0 45%;
-    margin: 0 10px;
+    margin: 10px;
 }
 
 
@@ -132,7 +154,7 @@ h1 {
 
 
 
-@media screen and (max-width:1199px) {
+@media screen and (max-width:1200px) and (min-width: 601px) {
 
     .main-content {
         width: 90%;
@@ -141,4 +163,64 @@ h1 {
     .post-default {
         flex: 1 0 45%;
     }
+}
+
+
+@media screen and (max-width:600px) and (min-width: 361px) {
+
+     .main-content {
+        width: 90%;
+    }
+
+    .menu-icon-container {
+        display: flex;
+        align-items: center;
+        padding-right: 20px;
+    }
+
+
+
+    .menu-content-container {
+        display: none;
+    }
+
+
+    .menu-content-container.menu-expand {
+        display: flex;
+        right: 0px;
+        width: 300px;
+        height: calc(100%-65px);
+        background-color: rgba(255, 255, 255, 0.8);
+        position: fixed;
+        top: 65px;
+        right: -100px;
+        flex-direction: column-reverse;
+        padding: 0;
+
+    }
+
+    .menu-content-container.menu-expand ul {
+        width: 100%;
+        text-align: center;
+        flex-direction: column;
+        justify-content: start;
+        padding: 0;
+        padding-top: 20px;
+    }
+
+    .menu-content-container.menu-expand li {
+        height: 65px;
+        display: flex;
+        align-items: center;
+    }
+
+
+    .post-promotion {
+        flex: 1 0 100%
+    }
+
+    .post-default {
+        flex: 1 0 100%;
+    }
+
 }
