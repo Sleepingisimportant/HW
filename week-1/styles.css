@@ -140,16 +140,34 @@ i {
 
 
 .post-default {
-    background-color: lightblue;
+    /* background-color: lightblue; */
     text-align: center;
     flex: 1 0 21%;
     margin: 10px;
+    position: relative;
 }
+
+.post-default-title {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(255, 255, 255, 0.7);
+  }
 
 
 .post-default img {
     width: 100%;
 }
+
+.post-default-star{
+    position: absolute;
+    top: 5%;
+    right:5%;
+
+}
+.checked {
+    color: orange;
+  }
 
 
 
