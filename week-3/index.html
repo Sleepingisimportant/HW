@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Week1 HW</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+</head>
+
+<body onload="getData();">
+    <nav class='site-navigation' role='navigation'>
+        <span class="menu-title">My Website</span>
+        <div id='menu' class="menu-content-container">
+            <ul>
+                <li>Item 1</li>
+                <li>Item 2</li>
+                <li>Item 3</li>
+                <li>Item 4</li>
+            </ul>
+
+        </div>
+        <div class="menu-icon-container">
+            <i class="fa fa-bars fa-lg" onclick="isMenuClicked(this)"></i>
+
+        </div>
+
+
+    </nav>
+
+    <div class="banner">
+        <h1 class="banner-text">Welcome to MyHome</h1>
+    </div>
+
+    <div class="main-content">
+
+        <div id="main-content-promotion">
+        </div>
+
+        <div id="main-content-default">
+        </div>
+
+        <div id="button-load-more">
+            <button onclick="loadMore()">Load More</button>
+        </div>
+
+
+    </div>
+
+    <script>
+        function isMenuClicked(isClicked) {
+            var menu = document.getElementById("menu");
+            menu.classList.toggle("menu-expand");
+        }
+
+        var attraction_data;
+        var loadingTimes = 0;
+
+        function getData() {
+            fetch("https://padax.github.io/taipei-day-trip-resources/taipei-attractions-assignment.json").then(function (response) {
+                return response.json();
+            }).then(function (data) {
+
+                attraction_data = data.result.results;
+                onLoadContent();
+            });
+        };
+
+        function onLoadContent() {
+
+            //load promotion posts
+            for (let i = 0; i < 2; i++) {
+                let postPromotion = document.createElement("span");
+                postPromotion.className = "post-promotion";
+                document.getElementById("main-content-promotion").appendChild(postPromotion);
+
+                var img = new Image();
+                img.src = "https" + attraction_data[i]["file"].split("https")[1]
+                document.getElementsByClassName("post-promotion")[i].appendChild(img);
+
+                let promotionTitle = document.createElement("span");
+                let promotionTitleText = document.createTextNode(attraction_data[i].stitle);
+                promotionTitle.appendChild(promotionTitleText);
+                document.getElementsByClassName("post-promotion")[i].appendChild(promotionTitle);
+
+            }
+            //load default posts
+            for (let i = loadingTimes; i < 8; i++) {
+                let postDefault = document.createElement("div");
+                postDefault.className = "post-default";
+                document.getElementById("main-content-default").appendChild(postDefault);
+
+                let postDefaultImage = document.createElement("div");
+                postDefaultImage.className = "post-default-image";
+                document.getElementsByClassName("post-default")[i].appendChild(postDefaultImage);
+                var img = new Image();
+                img.src = "https" + attraction_data[i + 2]["file"].split("https")[1];
+                document.getElementsByClassName("post-default-image")[i].appendChild(img);
+
+
+                let postDefaultTitle = document.createElement("div");
+                postDefaultTitle.className = "post-default-title";
+                let postDefaultTitleParagraphe = document.createElement("p");
+                postDefaultTitle.appendChild(postDefaultTitleParagraphe);
+
+                let postDefaultTitleParagrapheText = document.createTextNode(attraction_data[i + 2].stitle);
+                postDefaultTitleParagraphe.appendChild(postDefaultTitleParagrapheText);
+                document.getElementsByClassName("post-default")[i].appendChild(postDefaultTitle);
+
+                let postDefaultStar = document.createElement("div");
+                postDefaultStar.className = "post-default-star";
+                document.getElementsByClassName("post-default")[i].appendChild(postDefaultStar);
+                let postDefaultStarIcon = document.createElement("span");
+                postDefaultStarIcon.className = "fa fa-star checked"
+
+                document.getElementsByClassName("post-default-star")[i].appendChild(postDefaultStarIcon);
+
+            }
+
+            loadingTimes += 1;
+
+        };
+
+
+
+
+        function loadMore() {
+            //load more default post
+            for (let i = loadingTimes * 8; i < loadingTimes * 8 + 8; i++) {
+                let postDefault = document.createElement("div");
+                postDefault.className = "post-default";
+                document.getElementById("main-content-default").appendChild(postDefault);
+
+                let postDefaultImage = document.createElement("div");
+                postDefaultImage.className = "post-default-image";
+                document.getElementsByClassName("post-default")[i].appendChild(postDefaultImage);
+                var img = new Image();
+                img.src = "https" + attraction_data[i + 2]["file"].split("https")[1];
+                document.getElementsByClassName("post-default-image")[i].appendChild(img);
+
+
+                let postDefaultTitle = document.createElement("div");
+                postDefaultTitle.className = "post-default-title";
+                let postDefaultTitleParagraphe = document.createElement("p");
+                postDefaultTitle.appendChild(postDefaultTitleParagraphe);
+
+                let postDefaultTitleParagrapheText = document.createTextNode(attraction_data[i + 2].stitle);
+                postDefaultTitleParagraphe.appendChild(postDefaultTitleParagrapheText);
+                document.getElementsByClassName("post-default")[i].appendChild(postDefaultTitle);
+
+                let postDefaultStar = document.createElement("div");
+                postDefaultStar.className = "post-default-star";
+                document.getElementsByClassName("post-default")[i].appendChild(postDefaultStar);
+                let postDefaultStarIcon = document.createElement("span");
+                postDefaultStarIcon.className = "fa fa-star checked"
+
+                document.getElementsByClassName("post-default-star")[i].appendChild(postDefaultStarIcon);
+
+            }
+
+            loadingTimes += 1;
+
+            //After loading all attractions, loading button will be removed.
+            if (loadingTimes * 8 + 2 >= attraction_data.length) {
+                document.getElementById("button-load-more").remove();
+            }
+
+        };
+
+
+    </script>
+
+
+</body>
+
+</html>
