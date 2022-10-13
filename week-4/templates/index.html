@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Week-4</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+
+
+
+</head>
+
+<body>
+    <nav class='site-navigation' role='navigation'>
+        <div class="menu-title">歡迎光臨，請輸入帳號密碼</div>
+    </nav>
+
+
+
+    <div class="main-content">
+        <div class="login-form">
+            <h2>登入系統</h2>
+            <form action="/signin" method="post">
+                帳號: <input type="text"  name="username"><br>
+                密碼: <input type="password" name="password"><br><br>
+                <button>登入</button>
+            </form>
+        </div>
+
+        <hr class="thematic-break">
+
+        <div class="calculation-form">
+            <h2>計算正整數的平方</h2>
+
+            <form id="calculation" action="/square" method="post" >
+                <!-- limit user input: Only positive integer -->
+                正整數: <input type="number" min="0" step="1" name="num_input"><br><br>
+                <input type="submit" value="計算">
+            </form>
+        </div>
+
+
+
+    </div>
+
+    <script>
+
+
+
+        // function input() {
+        //     var action_src = "/square" + document.getElementsByid("num_input").value;
+        //     console.log(action_src);
+        //     var calculation_form = document.getElementById('calculation');
+        //     calculation_form.action = action_src;
+        // }
+
+
+    </script>
+
+
+</body>
+
+</html>
