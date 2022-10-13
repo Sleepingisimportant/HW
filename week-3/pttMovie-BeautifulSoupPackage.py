@@ -10,7 +10,7 @@ list_bad = []
 pages_to_be_crawl = 10
 url = "https://www.ptt.cc/bbs/movie/index.html"
 
-# crawl 10 pages of the PTT movie board
+# crawl n pages of the PTT movie board
 for x in range(pages_to_be_crawl):
 
     res = requests.get(url)
@@ -27,6 +27,7 @@ for x in range(pages_to_be_crawl):
         elif title == "負雷":
             list_bad.append(tag.text[1:])
 
+    #find url of previous page
     paging = Soup.find(lambda tag:tag.name=="a" and "‹ 上頁" in tag.text)
     url = "https://www.ptt.cc"+paging['href']
 
