@@ -23,7 +23,7 @@
         <div class="login-form">
             <h2>登入系統</h2>
             <form action="/signin" method="post">
-                帳號: <input type="text"  name="username"><br>
+                帳號: <input type="text" name="username"><br>
                 密碼: <input type="password" name="password"><br><br>
                 <button>登入</button>
             </form>
@@ -33,12 +33,10 @@
 
         <div class="calculation-form">
             <h2>計算正整數的平方</h2>
+            <input type="number" min="0" step="1" id="num_input" name="num_input"><br><br>
+            <input type="button" id="btn_calculation" onclick="calculation()" value="計算" />
 
-            <form id="calculation" action="/square" method="post" >
-                <!-- limit user input: Only positive integer -->
-                正整數: <input type="number" min="0" step="1" name="num_input"><br><br>
-                <input type="submit" value="計算">
-            </form>
+
         </div>
 
 
@@ -46,17 +44,10 @@
     </div>
 
     <script>
-
-
-
-        // function input() {
-        //     var action_src = "/square" + document.getElementsByid("num_input").value;
-        //     console.log(action_src);
-        //     var calculation_form = document.getElementById('calculation');
-        //     calculation_form.action = action_src;
-        // }
-
-
+        function calculation() {
+            input = document.getElementById('num_input').value
+            location.href = 'square/'+input
+        }
     </script>
 
 
