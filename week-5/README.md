@@ -1,12 +1,12 @@
-#MySQL Statement Practices
+# MySQL Statement Practices
 
 ## Table of Contents
-* [Part 3](##Part 3)
-* [Part 4](##Part 4)
-* [Part 5](##Part 5)
+* [Part 3](## Part 3)
+* [Part 4](## Part 4)
+* [Part 5](## Part 5)
 
 
-##Part 3
+## Part 3
 
     SELECT * FROM member;
 ![screenshots/3-1](screenshots/3-1.png)
@@ -28,7 +28,7 @@ UPDATE member SET name = 'test2' WHERE username = 'test';
 ![screenshots/3-6](screenshots/3-6.png)
 
  
-##Part 4
+## Part 4
     SELECT COUNT(*) FROM member;
 ![screenshots/4-1](screenshots/4-1.png)
 
@@ -39,7 +39,7 @@ UPDATE member SET name = 'test2' WHERE username = 'test';
 ![screenshots/4-3](screenshots/4-3.png)
 
 
-##Part 5
+## Part 5
 
     SELECT * FROM message;
 ![screenshots/5-1](screenshots/5-1.png)
