@@ -1,7 +1,7 @@
-#Week-5 Part 3
+//Week-5 Part 3
 
 SELECT * FROM member;
-![SELECT * FROM member;](/screenshots/3-1?raw=true)
+![SELECT * FROM member;](/screenshots/3-1?raw=true '3-1')
 
 SELECT * FROM member ORDER BY time DESC;
 ![SELECT * FROM member ORDER BY time DESC;](/screenshots/3-2?raw=true)
@@ -19,12 +19,12 @@ SET SQL_SAFE_UPDATES = 0;
 UPDATE member SET name = 'test2' WHERE username = 'test';
 
  
-#Week-5 Part 4
+//Week-5 Part 4
 SELECT COUNT(*) FROM member;
 SELECT SUM(follower_count) FROM member;
 SELECT AVG(follower_count) FROM member;
 
-#Week-5 Part 5
+//Week-5 Part 5
 CREATE TABLE message(
 id BIGINT PRIMARY KEY AUTO_INCREMENT,
 member_id BIGINT NOT NULL REFERENCES member (id),
