@@ -24,7 +24,7 @@
 ![screenshots/3-5](screenshots/3-5.png)
 
     SET SQL_SAFE_UPDATES = 0;
-UPDATE member SET name = 'test2' WHERE username = 'test';
+    UPDATE member SET name = 'test2' WHERE username = 'test';
 ![screenshots/3-6](screenshots/3-6.png)
 
  
