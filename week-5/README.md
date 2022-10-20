@@ -1,7 +1,7 @@
 //Week-5 Part 3
 
 SELECT * FROM member;
-![SELECT * FROM member;](/screenshots/3-1?raw=true '3-1')
+![SELECT * FROM member;](/screenshots/3-1.png)
 
 SELECT * FROM member ORDER BY time DESC;
 ![SELECT * FROM member ORDER BY time DESC;](/screenshots/3-2?raw=true)
