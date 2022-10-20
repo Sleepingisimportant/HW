@@ -52,7 +52,7 @@
 ![screenshots/5-3](screenshots/5-3.png)
 
 
-SELECT member.name, AVG(like_count) FROM message INNER JOIN member ON message.member_id=member.id and member.username='test' Group By member.name;
+    SELECT member.name, AVG(like_count) FROM message INNER JOIN member ON message.member_id=member.id and member.username='test' Group By member.name;
 ![screenshots/5-4](screenshots/5-4.png)
 
 
