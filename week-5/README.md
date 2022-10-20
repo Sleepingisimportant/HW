@@ -1,53 +1,58 @@
-//Week-5 Part 3
+#MySQL Statement Practices
 
-SELECT * FROM member;
-![SELECT * FROM member;](/screenshots/3-1.png)
+## Table of Contents
+* [Part 3](##Part 3)
+* [Part 4](##Part 4)
+* [Part 5](##Part 5)
 
-SELECT * FROM member ORDER BY time DESC;
-![SELECT * FROM member ORDER BY time DESC;](/screenshots/3-2?raw=true)
 
-SELECT * FROM member ORDER BY time DESC LIMIT 3 OFFSET 1;
-![SELECT * FROM member ORDER BY time DESC LIMIT 3 OFFSET 1](/screenshots/3-3?raw=true)
+##Part 3
 
-SELECT * FROM member WHERE username = 'test';
-![SELECT * FROM member WHERE username = 'test'](/screenshots/3-4?raw=true)
+    SELECT * FROM member;
+![screenshots/3-1](screenshots/3-1.png)
 
-SELECT * FROM member WHERE username = 'test' and password = 'test';
-![SELECT * FROM member WHERE username = 'test' and password = 'test'](/screenshots/3-5?raw=true)
+    SELECT * FROM member ORDER BY time DESC;
+![screenshots/3-2](screenshots/3-2.png)
 
-SET SQL_SAFE_UPDATES = 0;
+    SELECT * FROM member ORDER BY time DESC LIMIT 3 OFFSET 1;
+![screenshots/3-3](screenshots/3-3.png)
+
+    SELECT * FROM member WHERE username = 'test';
+![screenshots/3-4](screenshots/3-4.png)
+
+    SELECT * FROM member WHERE username = 'test' and password = 'test';
+![screenshots/3-5](screenshots/3-5.png)
+
+    SET SQL_SAFE_UPDATES = 0;
 UPDATE member SET name = 'test2' WHERE username = 'test';
+![screenshots/3-6](screenshots/3-6.png)
 
  
-//Week-5 Part 4
-SELECT COUNT(*) FROM member;
-SELECT SUM(follower_count) FROM member;
-SELECT AVG(follower_count) FROM member;
+##Part 4
+    SELECT COUNT(*) FROM member;
+![screenshots/4-1](screenshots/4-1.png)
 
-//Week-5 Part 5
-CREATE TABLE message(
-id BIGINT PRIMARY KEY AUTO_INCREMENT,
-member_id BIGINT NOT NULL REFERENCES member (id),
-cintent VARCHAR(255) NOT NULL,
-like_count INT UNSIGNED NOT NULL DEFAULT 0,
-time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP); 
+    SELECT SUM(follower_count) FROM member;
+![screenshots/4-2](screenshots/4-2.png)
 
-ALTER TABLE message RENAME COLUMN cintent TO content;
-SELECT * FROM message;
-
-INSERT INTO message(member_id, content, like_count) VALUES(1, 'This is a banana.', 1);
-INSERT INTO message(member_id, content, like_count) VALUES(2, 'This is an apple.', 1);
-INSERT INTO message(member_id, content, like_count) VALUES(3, 'This is a pen.', 1);
-INSERT INTO message(member_id, content, like_count) VALUES(4, 'This is a monkey.', 1);
-INSERT INTO message(member_id, content, like_count) VALUES(5, 'This is a table.', 1);
-INSERT INTO message(member_id, content, like_count) VALUES(6, 'This is a ship.', 1);
-INSERT INTO message(member_id, content, like_count) VALUES(6, 'This is a man.', 6);
-INSERT INTO message(member_id, content, like_count) VALUES(6, 'This is a pig.', 12);
+    SELECT AVG(follower_count) FROM member;
+![screenshots/4-3](screenshots/4-3.png)
 
 
+##Part 5
+
+    SELECT * FROM message;
+![screenshots/5-1](screenshots/5-1.png)
+
+    SELECT member.name, message.content FROM message INNER JOIN member ON message.member_id=member.id;
+![screenshots/5-2](screenshots/5-2.png)
 
 
-SELECT member.name, message.content FROM message INNER JOIN member ON message.member_id=member.id;
-SELECT member.name, message.content FROM message INNER JOIN member ON message.member_id=member.id and member.username='test';
+    SELECT member.name, message.content FROM message INNER JOIN member ON message.member_id=member.id and member.username='test';
+![screenshots/5-3](screenshots/5-3.png)
+
+
 SELECT member.name, AVG(like_count) FROM message INNER JOIN member ON message.member_id=member.id and member.username='test' Group By member.name;
+![screenshots/5-4](screenshots/5-4.png)
+
 
