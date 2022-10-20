@@ -1,9 +1,9 @@
 # MySQL Statement Practices
 
 ## Table of Contents
-* [Part 3](## Part 3)
-* [Part 4](## Part 4)
-* [Part 5](## Part 5)
+* [Part 3](##Part 3)
+* [Part 4](##Part 4)
+* [Part 5](##Part 5)
 
 
 ## Part 3
