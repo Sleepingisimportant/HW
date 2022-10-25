@@ -1,8 +1,6 @@
 USE website;
 SHOW TABLES;
 
-SELECT * FROM member;
-
 CREATE TABLE member(
 id BIGINT PRIMARY KEY AUTO_INCREMENT,
 name VARCHAR(255) NOT NULL,
@@ -39,7 +37,6 @@ cintent VARCHAR(255) NOT NULL,
 like_count INT UNSIGNED NOT NULL DEFAULT 0,
 time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP); 
 
-ALTER TABLE message RENAME COLUMN cintent TO content;
 SELECT * FROM message;
 
 INSERT INTO message(member_id, content, like_count) VALUES(1, 'This is a banana.', 1);

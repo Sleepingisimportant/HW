@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Week-4</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+
+
+
+</head>
+
+<body>
+    <nav class='site-navigation' role='navigation'>
+        <div class="menu-title">歡迎光臨，這是會員頁</div>
+    </nav>
+
+
+
+    <div class="main-content">
+        <div class="login-form">
+            <h2>恭喜 {{user}} 成功登入系統</h2>
+            <a href="/signout">登出系統</a>
+        </div>
+    </div>
+
+    <hr class="thematic-break">
+
+    <div class="comment-form">
+        <h2>快來留言吧</h2>
+        <form action="/comment" method="post">
+            內容: <input type="text" name="comment" required><br><br>
+            <button>送出</button>
+        </form>
+    </div>
+
+    <hr class="thematic-break">
+
+    <div class="comment-area">
+        {% for comment in comment_content %}
+        <p><b>{{ comment[0]+":"}}</b>{{ comment[1]+"\n"}}</p>
+        {% endfor %}
+    </div>
+
+    <script>
+
+
+    </script>
+
+
+</body>
+
+</html>
