@@ -129,8 +129,8 @@ def error():
         return render_template("error.html", err_msg=message)
 
 
-@app.route("/comment", methods=["POST"])
-def comment():
+@app.route("/message", methods=["POST"])
+def message():
     member_id=session.get("id")
     comment=request.form["comment"]
     like_count=0
