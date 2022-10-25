@@ -69,7 +69,6 @@ def signup():
                  "VALUES (%s, %s, %s, %s)")
         cur.execute(singup_member,(name, username, password, follower_count))
         cnx.commit()
-        
         return redirect(url_for('index'))
 
     else:
@@ -97,7 +96,6 @@ def signin():
             session["id"] = id
             session["name"] = name
             session["username"] = username
-
             return redirect(url_for('member'))
 
         else:
