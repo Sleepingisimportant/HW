@@ -46,7 +46,8 @@ def get_comment_content():
 def index():
     if 'username' in session:
      
-        return render_template("success.html", user=session.get("name"), comment_content=get_comment_content())
+        return redirect(url_for('member'))
+
     else:
         return render_template("index.html")
 
@@ -59,7 +60,7 @@ def signup():
     password = request.form["password"]
     follower_count=0
 
-    cur.execute("SELECT username, COUNT(*) FROM member WHERE username = %s GROUP BY username",(username,))
+    cur.execute("SELECT username, COUNT(*) FROM member WHERE username = %s",(username,))
 
     row_count = cur.rowcount
     if row_count == 0:
@@ -97,7 +98,8 @@ def signin():
             session["name"] = name
             session["username"] = username
 
-            return render_template("success.html", user=name, comment_content=get_comment_content())
+            return redirect(url_for('member'))
+
         else:
             err_msg = "帳號、或密碼輸入錯誤"
             return redirect(url_for('error', message=err_msg))
@@ -140,7 +142,7 @@ def message():
                  "VALUES (%s, %s, %s)")
     cur.execute(insert_comment,(member_id, comment, like_count))
     cnx.commit()
-    return render_template("success.html", user=session.get("name"), comment_content=get_comment_content())
+    return redirect(url_for('member'))
     
 
 
