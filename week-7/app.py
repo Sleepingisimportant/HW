@@ -2,34 +2,36 @@
 
 from flask import Flask
 from flask import request
+from flask import session
 from flask import render_template
 from flask import redirect, url_for
-from flask import session
+
 
 import mysql.connector
+import MySQLdb
 from mysql.connector import errorcode
-from mysql.connector import pooling
-from mysql.connector import connect
+
 
 
 app = Flask(__name__,
             static_folder="public",
             static_url_path="/")
 
+app.config['JSON_AS_ASCII'] = False
+
 app.secret_key = "any string but secret"
+
 
 #### create connection pool ####
 db_config = {
     'host': 'localhost',
     'user': 'root',
-    'password': '',
+    'password': 'mysqlpw1!',
     'database': 'website',
     'port': 3306,
 }
 cnxpool = mysql.connector.pooling.MySQLConnectionPool(
     pool_name='website_dbp', pool_size=20, pool_reset_session=True, **db_config)
-
-
 
 try:
     cnx = cnxpool.get_connection()
@@ -45,24 +47,18 @@ except mysql.connector.Error as err:
 cur = cnx.cursor(buffered=True)
 
 
-def get_comment_content():
-    cur.execute(
-        "SELECT member.name, message.content FROM message INNER JOIN member ON message.member_id= member.id")
-    data = cur.fetchall()
-    return data
 
 
-@app.route("/")
+@ app.route("/")
 def index():
     if 'username' in session:
-
         return redirect(url_for('member'))
 
     else:
         return render_template("index.html")
 
 
-@app.route("/signup", methods=["POST"])
+@ app.route("/signup", methods=["POST"])
 def signup():
     name = request.form["name"]
     username = request.form["username"]
@@ -70,9 +66,10 @@ def signup():
     follower_count = 0
 
     cur.execute(
-        "SELECT username, COUNT(*) FROM member WHERE username = %s", (username,))
+        "SELECT COUNT(*) FROM member WHERE username = %s", (username,))
 
-    row_count = cur.rowcount
+    row_count = cur.fetchone()[0]
+
     if row_count == 0:
         singup_member = ("INSERT INTO member "
                          "(name, username, password, follower_count) "
@@ -86,9 +83,8 @@ def signup():
         return redirect(url_for('error', message=err_msg))
 
 
-@app.route("/signin", methods=["POST"])
+@ app.route("/signin", methods=["POST"])
 def signin():
-
     try:
         username = request.form["username"]
         password = request.form["password"]
@@ -115,7 +111,7 @@ def signin():
         return redirect(url_for('error', message=err_msg))
 
 
-@app.route("/member")
+@ app.route("/member")
 def member():
     if 'username' in session:
         return render_template("success.html", user=session.get("name"), comment_content=get_comment_content())
@@ -123,18 +119,24 @@ def member():
         return redirect(url_for('index'))
 
 
-@app.route("/error")
+def get_comment_content():
+    cur.execute(
+        "SELECT member.name, message.content FROM message INNER JOIN member ON message.member_id= member.id")
+    data = cur.fetchall()
+    return data
+
+
+@ app.route("/error")
 def error():
     if 'username' in session:
         message = "你已經登錄，請回到上一頁再重新試試。"
         return render_template("error.html", err_msg=message)
-
     else:
         message = request.args.get("message", "")
         return render_template("error.html", err_msg=message)
 
 
-@app.route("/message", methods=["POST"])
+@ app.route("/message", methods=["POST"])
 def message():
     member_id = session.get("id")
     comment = request.form["comment"]
@@ -148,7 +150,7 @@ def message():
     return redirect(url_for('member'))
 
 
-@app.route("/signout")
+@ app.route("/signout")
 def signout():
     session.pop('id', None)
     session.pop('name', None)
@@ -157,4 +159,54 @@ def signout():
     return redirect(url_for('index'))
 
 
-app.run(port=3000)
+@ app.route("/api/member", methods=["PATCH"])
+def amend_name():
+
+    member_id = session.get("id")
+    request_params = request.get_json()
+    new_name = request_params['name']
+
+    try:
+        cur.execute(
+            "UPDATE member SET name =%s WHERE id=%s", (new_name, member_id))
+        json = {
+            "ok": "true"
+        }
+        session["name"]=new_name
+        return json
+
+    except (MySQLdb.Error, MySQLdb.Warning) as e:
+        print(e)
+        json = {
+            "error": "true"
+        }
+        return json
+
+
+@ app.route("/api/member", methods=["GET"])
+def search_name_by_username():
+    username = request.args.get("username", "")
+    cur.execute(
+        "SELECT * FROM member WHERE member.username= %s", (username,))
+    fetched_data = cur.fetchone()
+
+    if fetched_data is None:
+        json = {
+            "data": "null"
+        }
+    else:
+        json = {
+            "data": {
+                "id": fetched_data[0],
+                "name": fetched_data[1],
+                "username": fetched_data[2]
+            }
+        }
+
+    return json
+
+
+
+
+if __name__ == '__main__':
+    app.run(port=3000)

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Week-7</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+</head>
+
+<body>
+    <nav class='site-navigation' role='navigation'>
+        <div class="menu-title">歡迎光臨，請註冊登入系統</div>
+    </nav>
+
+    <div class="main-content">
+
+        <div class="signup-form">
+            <h2>註冊帳號</h2>
+            <form action="/signup" method="post">
+                姓名: <input type="text" name="name" required><br>
+                帳號: <input type="text" name="username" required><br>
+                密碼: <input type="password" name="password" required><br><br>
+                <button>註冊</button>
+            </form>
+        </div>
+
+        <hr class="thematic-break">
+
+        <div class="login-form">
+            <h2>登入系統</h2>
+            <form action="/signin" method="post">
+                帳號: <input type="text" name="username" required><br>
+                密碼: <input type="password" name="password" required><br><br>
+                <button>登入</button>
+            </form>
+        </div>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Week-7</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+
+
+
+</head>
+
+<body>
+    <nav class='site-navigation' role='navigation'>
+        <div class="menu-title">歡迎光臨，這是會員頁</div>
+    </nav>
+
+
+
+    <div class="main-content">
+        <div class="login-form">
+            <h2 id="welcome-sentence">恭喜 {{user}} 成功登入系統</h2>
+            <a href="/signout">登出系統</a>
+        </div>
+    </div>
+
+    <hr class="thematic-break">
+
+    <div class="search-member-form">
+        <h2>查詢會員姓名</h2>
+        <form>
+            <input type="text" name="username" id="search-name" required><br><br>
+            <input type="button" onclick="get_name()" value="查詢" />
+        </form>
+        <div class="comment-area">
+            <p id="search-name-result"></p>
+
+        </div>
+    </div>
+
+    <hr class="thematic-break">
+
+
+    <div class="change-name-form">
+        <h2>更新我的姓名</h2>
+        <form>
+            <input type="text" name="new-name" id="amend-name" required><br><br>
+            <input type="button" onclick="amend_name()" value="更新" />
+        </form>
+        <div class="comment-area">
+            <p id="amend-name-result"></p>
+
+        </div>
+    </div>
+
+
+    <hr class="thematic-break">
+
+    <div class="comment-form">
+        <h2>快來留言吧</h2>
+        <form action="/message" method="post">
+            內容: <input type="text" name="comment" required><br><br>
+            <button>送出</button><br><br>
+        </form>
+    </div>
+
+
+    <div class="comment-area">
+        {% for comment in comment_content %}
+        <p><b>{{ comment[0]+":"}}</b>{{ comment[1]+"\n"}}</p>
+        {% endfor %}
+    </div>
+
+    <script>
+
+        const search_name_input = document.getElementById('search-name');
+        search_name_input.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                get_name();
+            }
+        });
+
+        const new_name_input = document.getElementById('amend-name');
+        new_name_input.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                amend_name();
+            }
+        });
+
+        async function amend_name() {
+            input = document.getElementById('amend-name').value
+            const url = 'api/member'
+            let data = await fetch(url, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json ; charset=UTF-8'
+                },
+                body: JSON.stringify({
+                    name: input
+                })
+            })
+                .then((response) => response.json())
+                .then((responseData) => {
+                    console.log(responseData);
+                    return responseData;
+                })
+                .catch(error => console.warn(error));
+
+            if (data['ok']) {
+                result = "更新成功"
+                div_amend_name = document.getElementById("amend-name-result");
+                div_amend_name.textContent = result;
+                div_welcome_sentence = document.getElementById("welcome-sentence");
+                div_welcome_sentence.textContent = "恭喜 " + input + " 成功登入系統"
+
+            } else {
+                result = "更新失敗"
+            }
+        }
+
+
+
+        async function get_name() {
+            input = document.getElementById('search-name').value
+            const url = 'api/member?username=' + input
+            let data = await fetch(url, {
+                method: 'GET',
+            })
+                .then((response) => response.json())
+                .then((responseData) => {
+                    console.log(responseData);
+                    return responseData;
+                })
+                .catch(error => console.warn(error));
+
+            if (data['data'] == 'null') {
+                result = "查無此會員"
+
+            } else {
+                result = data['data']['name'] + "(" + data['data']['username'] + ")"
+
+            }
+
+            div = document.getElementById("search-name-result");
+            div.textContent = result;
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>
