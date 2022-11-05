@@ -170,7 +170,7 @@ def amend_name():
         cur.execute(
             "UPDATE member SET name =%s WHERE id=%s", (new_name, member_id))
         json = {
-            "ok": "true"
+            "ok": True
         }
         session["name"]=new_name
         return json
@@ -178,7 +178,7 @@ def amend_name():
     except (MySQLdb.Error, MySQLdb.Warning) as e:
         print(e)
         json = {
-            "error": "true"
+            "error": True
         }
         return json
 
@@ -192,7 +192,7 @@ def search_name_by_username():
 
     if fetched_data is None:
         json = {
-            "data": "null"
+            "data": None
         }
     else:
         json = {
